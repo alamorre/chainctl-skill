@@ -152,16 +152,17 @@ chainctl iam role-bindings list --parent my-org -o json
 | `chainctl auth` | Authentication & token management | `login`, `logout`, `status`, `configure-docker`, `configure-npm`, `token` (+ `capabilities`), `pull-token`, `delete-account` |
 | `chainctl config` | Local configuration | `view`, `edit`, `set`, `unset`, `reset`, `save`, `validate` |
 | `chainctl iam` | Identity & access management | `organizations`, `folders`, `identities`, `roles`, `role-bindings`, `invites`, `identity-providers`, `external-group-role-mappings`, `account-associations` |
-| `chainctl images` | Container image operations | `list`, `diff`, `history`, `changelog`, `tags`, `repos`, `advisories`, `entitlements`, `catalog`, `helm` (`values`, `refs`, `add-chart`, `history`) |
+| `chainctl images` | Container image operations | `list`, `diff`, `history`, `changelog`, `tags`, `repos`, `advisories`, `entitlements`, `catalog`, `discover`, `helm` (`values`, `refs`, `add-chart`, `history`) |
 | `chainctl events` | Event subscriptions | `subscriptions` (`list`, `create`, `delete`) |
 | `chainctl packages` | Package management | `versions list` |
-| `chainctl libraries` | Libraries verification & governance | `verify`, `update-hashes`, `packages` (`list`, `count`, `versions`, `blocked`), `policy`, `entitlements`, `cache` |
-| `chainctl policies` | Registry pull-time policy governance | `list`, `describe`, `enable`, `disable`, `check`, `binding`, `decision`, `override`, `custom` |
+| `chainctl libraries` | Libraries verification & governance | `verify`, `update-hashes`, `remediate`, `packages` (`list`, `count`, `versions`, `blocked`), `policy`, `entitlements`, `cache` |
+| `chainctl policy` (alias `policies`) | Registry pull-time policy governance | `list`, `describe`, `enable`, `disable`, `check`, `binding`, `decision`, `override`, `custom` |
 | `chainctl actions` | Chainguard Actions product | `entitlements`, `catalog list`, `list`, `discover` |
 | `chainctl agent` | The Guardener (local Dockerfile migration) | `accept-terms`, `dockerfile` (`build`, `optimize`, `upgrade`, `validate` — hidden from `chainctl agent --help` but functional) |
-| `chainctl guardener` | Guardener GitHub App integration | `github` (`link`, `unlink`, `status`, `migrate`) |
-| `chainctl skills` | Skills Registry (`skills.cgr.dev`) | `push`, `pull`, `install`, `uninstall`, `list`, `versions`, `describe`, `validate`, `delete`, `entitlements`, `accept-terms` |
+| `chainctl guardener` | Guardener GitHub App integration | `github` (`link`, `unlink`, `status`, `migrate`), `scans` (`list`, `get`), `entitlement get` |
+| `chainctl skills` | Skills Registry (`skills.cgr.dev`) | `push`, `pull`, `install`, `uninstall`, `list`, `versions`, `describe`, `validate`, `harden`, `status`, `delete`, `entitlements`, `accept-terms` |
 | `chainctl starter` | Catalog Starter orgs | `init`, `request-access`, `add-images`, `status` |
+| `chainctl develop` / `chainctl ci` | Sandbox plane sessions & CI migration (hidden commands) | `develop` (alias `dev`) session management; `ci migrate` |
 | `chainctl update` | Self-update | — |
 | `chainctl version` | Print version | — |
 
