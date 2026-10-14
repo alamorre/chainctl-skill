@@ -1,4 +1,5 @@
 ---
+name: chainctl
 description: "Chainguard chainctl CLI assistant — helps construct, explain, and troubleshoot chainctl commands for managing Chainguard container images, IAM, authentication, and platform configuration."
 allowed-tools: [Bash, Read, Grep, Glob, WebFetch]
 ---

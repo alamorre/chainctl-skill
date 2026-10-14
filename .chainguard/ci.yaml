@@ -1,0 +1,15 @@
+version: 1
+environment:
+  packages: [chainctl]
+checks:
+  skill-validate:
+    description: Lint the chainctl skill with chainctl skills validate (format only, offline).
+    # chainctl is published for x86_64 only.
+    resources: medium-amd64
+    trigger: [presubmit, postsubmit]
+    timeout: 5m
+    script: |
+      dir=/var/tmp/skill/chainctl
+      mkdir -p "$dir"
+      cp .claude/commands/chainctl.md "$dir/SKILL.md"
+      chainctl skills validate "$dir" --strict
