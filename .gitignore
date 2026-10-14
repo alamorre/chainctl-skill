@@ -4,3 +4,4 @@
 
 # Custom Assembly build configs (generated, not part of the skill)
 *.yaml
+!.chainguard/*.yaml
