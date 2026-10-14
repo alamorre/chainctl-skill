@@ -8,15 +8,17 @@ A custom [Claude Code](https://docs.anthropic.com/en/docs/claude-code) slash com
 
 - **Authentication** — Login, logout, token management, Docker credential helpers, pull tokens
 - **Container Images** — List, diff, history, changelog, tags, advisories, repos, Helm chart values
-- **Custom Assembly** — Customize Chainguard images by adding packages, env vars, OCI annotations, user accounts, and certificates without maintaining custom build pipelines
+- **Custom Assembly** — Customize Chainguard images by adding packages, env vars, OCI annotations, user accounts, and certificates without maintaining custom build pipelines; tag-based overlays (`chainctl images overlays`) and Guarded Entrypoint (beta)
 - **IAM** — Organizations, folders, identities, roles, role-bindings, invites, identity providers, cloud account associations (AWS, Azure, GCP)
 - **Events** — Subscription management for platform events
 - **Packages** — Query package version data from Chainguard repositories
 - **Libraries** — Verify artifacts are built from Chainguard sources using SBOM/signature analysis; manage library policies, entitlements, and the resolution cache
 - **Policies** — Registry pull-time policy governance: enable/disable policies, custom policies, bindings, decisions, overrides
-- **Guardener** — GitHub App integration: link GitHub orgs to Chainguard groups and migrate GitHub Actions workflows to Chainguard equivalents
+- **Guardener** — Chainguard App (GitHub) integration: link GitHub orgs to Chainguard groups, migrate GitHub Actions workflows and container image references to Chainguard equivalents
 - **Skills** — Publish, install, and manage agent skills on the Skills Registry (`skills.cgr.dev`)
 - **Actions & Starter** — Chainguard Actions catalog/entitlements and Catalog Starter org setup
+- **Checks** — Chainguard Checks (beta): CI that runs each check in a fresh Chainguard OS microVM. Covers the `.chainguard/ci.yaml` / `.chainguard/ci/` config, GitHub integration, workload identities, caches, and `chainctl checks` (alias `ci`) for status/failures/logs/rerun/validate/explain/migrate
+- **Workspaces** — Chainguard Workspaces (beta): remote microVM dev sessions for repos and coding agents via `chainctl develop`. Covers sign-up with `chainctl develop init`, sessions, environments, brokered credentials, GitHub-as-you, Claude Code, and `run-ci`
 - **Configuration** — View, edit, set, validate local chainctl config
 
 ## Installation
@@ -149,20 +151,21 @@ chainctl iam role-bindings list --parent my-org -o json
 
 | Command | Description | Subcommands |
 |---------|-------------|-------------|
-| `chainctl auth` | Authentication & token management | `login`, `logout`, `status`, `configure-docker`, `configure-npm`, `token` (+ `capabilities`), `pull-token`, `delete-account` |
+| `chainctl auth` | Authentication & token management | `login`, `logout`, `status`, `configure-docker`, `configure-npm`, `configure` (`docker`, `npm`, `nuget`), `configure-refresh-service`, `token` (+ `capabilities`, delegation grants), `pull-token`, `delete-account` |
 | `chainctl config` | Local configuration | `view`, `edit`, `set`, `unset`, `reset`, `save`, `validate` |
 | `chainctl iam` | Identity & access management | `organizations`, `folders`, `identities`, `roles`, `role-bindings`, `invites`, `identity-providers`, `external-group-role-mappings`, `account-associations` |
-| `chainctl images` | Container image operations | `list`, `diff`, `history`, `changelog`, `tags`, `repos`, `advisories`, `entitlements`, `catalog`, `discover`, `helm` (`values`, `refs`, `add-chart`, `history`) |
+| `chainctl images` | Container image operations | `list`, `diff`, `history`, `changelog`, `tags`, `repos`, `overlays`, `advisories`, `entitlements`, `catalog`, `discover`, `helm` (`values`, `refs`, `add-chart`, `history`) |
 | `chainctl events` | Event subscriptions | `subscriptions` (`list`, `create`, `delete`) |
 | `chainctl packages` | Package management | `versions list` |
-| `chainctl libraries` | Libraries verification & governance | `verify`, `update-hashes`, `remediate`, `packages` (`list`, `count`, `versions`, `blocked`), `policy`, `entitlements`, `cache` |
+| `chainctl libraries` | Libraries verification & governance | `verify`, `update-hashes`, `remediate`, `packages` (`list`, `count`, `versions`, `blocked`), `policy`, `entitlements`, `cache`, `go upload`, `storage list` |
 | `chainctl policy` (alias `policies`) | Registry pull-time policy governance | `list`, `describe`, `enable`, `disable`, `check`, `binding`, `decision`, `override`, `custom` |
 | `chainctl actions` | Chainguard Actions product | `entitlements`, `catalog list`, `list`, `discover` |
 | `chainctl agent` | The Guardener (local Dockerfile migration) | `accept-terms`, `dockerfile` (`build`, `optimize`, `upgrade`, `validate` — hidden from `chainctl agent --help` but functional) |
-| `chainctl guardener` | Guardener GitHub App integration | `github` (`link`, `unlink`, `status`, `migrate`), `scans` (`list`, `get`), `entitlement get` |
-| `chainctl skills` | Skills Registry (`skills.cgr.dev`) | `push`, `pull`, `install`, `uninstall`, `list`, `versions`, `describe`, `validate`, `harden`, `status`, `delete`, `entitlements`, `accept-terms` |
+| `chainctl guardener` | Guardener GitHub App integration | `github` (`link`, `unlink`, `status`, `migrate` (`create`, `get`, `list`)), `scans` (`list`, `get`), `entitlement get` |
+| `chainctl skills` | Skills Registry (`skills.cgr.dev`) | `push`, `pull`, `install`, `uninstall`, `list`, `versions`, `describe`, `validate`, `verify`, `harden`, `status`, `registry` (`publish`, `install`), `delete`, `entitlements`, `accept-terms` |
 | `chainctl starter` | Catalog Starter orgs | `init`, `request-access`, `add-images`, `status` |
-| `chainctl develop` / `chainctl ci` | Sandbox plane sessions & CI migration (hidden commands) | `develop` (alias `dev`) session management; `ci migrate` |
+| `chainctl develop` (alias `dev`) | Chainguard Workspaces dev sessions (hidden during beta) | `init`, `accept-terms`, `list`, `rename`, `delete`, `check`, `creds`, `policy`, `github`, `claude` |
+| `chainctl checks` (alias `ci`) | Chainguard Checks (hidden during beta) | `status`, `failures`, `logs`, `trace`, `events`, `attempts`, `describe`, `list`, `run`, `rerun`, `cancel`, `stats`, `top`, `trends`, `validate`, `explain`, `migrate`, `accept-terms` |
 | `chainctl update` | Self-update | — |
 | `chainctl version` | Print version | — |
 
