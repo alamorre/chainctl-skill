@@ -3035,11 +3035,11 @@ AI-powered Dockerfile migration commands.
 
    # find_package_equivalent, one call per package
    build-essential  (distro=debian)  ->  build-base
-   libssl-dev       (distro=debian)  ->  openssl-dev
+   libssl-dev       (distro=debian)  ->  libssl3
    pkg-config       (distro=debian)  ->  pkgconf
 
    # Result (Chainguard/Wolfi)
-   apk add build-base openssl-dev pkgconf
+   apk add build-base libssl3 pkgconf
    ```
 
    Bundling can differ: one source package can map to several APK packages, or the reverse. Confirm each result with `apk search <name>` in the `-dev` image before you finalize the `apk add` list.
